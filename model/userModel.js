@@ -5,7 +5,6 @@ const UserSchema = mongoose.Schema({
     name:{
         type:String,
         required:true,
-        tags: { type: [String], index: true }
     },
     email:{
         type:String,
@@ -16,9 +15,8 @@ const UserSchema = mongoose.Schema({
         type:String,
     },
     contact:{
-        type:Number,
-        required:true,
-        tags:{type:[Number],index:true}
+        type:String,
+        required:true
     },
     gender:{
         type:String,
@@ -27,7 +25,9 @@ const UserSchema = mongoose.Schema({
         type:String,
         required:true
     }
-})
+},{timeStamps:true})
+
+UserSchema.index({ name: 'text', contact: 'text' });
 
 UserSchema.virtual('password').set( function(password){
     this.hashPassword= bcrypt.hashSync(password,10);

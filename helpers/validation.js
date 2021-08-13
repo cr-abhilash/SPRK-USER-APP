@@ -1,5 +1,5 @@
 const {check,validationResult} = require('express-validator');
-
+const jwt = require('jsonwebtoken');
 const validation={
     userSignUp:[
    check('name').notEmpty().withMessage("User name is required."),
@@ -23,3 +23,14 @@ module.exports.isRequestValidated=(req,res,next)=>{
     next();
 }
 
+exports.checkSignin=(req,res,next)=>{
+ const token = req.headers.authorization.split(" ")[1];
+ const data = jwt.verify(token,"Secret key");
+ if(data){
+     req.body.user=data;
+     next();
+ }
+ else{
+     return res.status(400).json({error:"Invalid auth token"});
+ }
+}

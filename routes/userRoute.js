@@ -1,16 +1,17 @@
 const router = require('express').Router();
 const jwt = require('jsonwebtoken');
-const UserModel = require('../model/userModel');
+const { userSignUp, userSignIn, signout, getUsers, searchUsers } = require('../controller/user');
+const {validation,isRequestValidated, checkSignin} = require('../helpers/validation');
 
-router.post('/signup',(req,res)=>{
-    console.log(req);
-    const {name,email}=req.body;
-    const newUser=new UserModel(req.body);
-    newUser.save().then((data)=>{
-        const token=jwt.sign({name:name,email:email},"Secret key",{expiresIn:"1d"});
-        
-        res.status(200).json({token,userData:data});
-    })
-    
-})
+
+router.post('/signup',validation.userSignUp,isRequestValidated ,userSignUp);
+
+router.post('/signin',validation.userSignIn,isRequestValidated,userSignIn);
+
+router.post('/signout',checkSignin,signout);
+
+router.get('/all',checkSignin,getUsers);
+
+router.get('/search',checkSignin,searchUsers);
+
 module.exports=router;
