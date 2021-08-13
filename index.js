@@ -22,6 +22,6 @@ app.use('/api/user',require('./routes/userRoute'))
 
 
 
-app.listen(process.env.PORT,()=>{
-    console.log(`Server is running at ${process.env.PORT}`)
+app.listen(process.env.PORT || 3000,()=>{
+    console.log(`Server is running at ${process.env.PORT || 3000}`)
 }).on('error',(err)=>console.log(err))
