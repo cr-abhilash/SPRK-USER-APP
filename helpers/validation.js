@@ -1,5 +1,6 @@
 const {check,validationResult} = require('express-validator');
 const jwt = require('jsonwebtoken');
+const { expiredTokens } = require('./Token');
 const validation={
     userSignUp:[
    check('name').notEmpty().withMessage("User name is required."),
@@ -26,7 +27,7 @@ module.exports.isRequestValidated=(req,res,next)=>{
 exports.checkSignin=(req,res,next)=>{
  const token = req.headers.authorization.split(" ")[1];
  const data = jwt.verify(token,"Secret key");
- if(data){
+ if(data && !expiredTokens[data.email]){
      req.body.user=data;
      next();
  }
