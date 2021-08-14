@@ -13,7 +13,7 @@ exports.userSignUp = async (req, res) => {
         }
         const newUser = new UserModel(req.body);
         const userData = await newUser.save();
-        const token = jwt.sign({ name: name, email: email }, "Secret key", { expiresIn: "1d" });
+        const token = jwt.sign({ name: name, email: email },process.env.SECRET_KEY, { expiresIn: "1d" });
         expiredTokens[email]=null;
         return res.status(200).json({ token, userData });
     }
@@ -30,7 +30,7 @@ exports.userSignIn = (req,res)=>{
             return res.status(400).json({message:"User not found"})
         }
         else if(data.checkPassword(password)){
-            const token=jwt.sign({name:data.name,email:email},"Secret key",{expiresIn:"1d"});
+            const token=jwt.sign({name:data.name,email:email},process.env.SECRET_KEY,{expiresIn:"1d"});
             expiredTokens[email]=null;
             return res.status(200).json({token,userData:data});
         }
