@@ -28,14 +28,14 @@ exports.checkSignin=(req,res,next)=>{
  const token = req.headers.authorization.split(" ")[1];
  const data = jwt.verify(token,process.env.SECRET_KEY,(err,data)=>{
     if(err){
-        return res.status(400).json({error:"Invalid auth token"});
+        return res.status(401).json({error:"Invalid auth token"});
     }
     if(data && !expiredTokens[data.email]){
         req.body.user=data;
         next();
     }
     else{
-        return res.status(400).json({error:"Invalid auth token"});
+        return res.status(401).json({error:"Invalid auth token"});
     }
  });
 }
