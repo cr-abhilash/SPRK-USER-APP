@@ -45,7 +45,7 @@ exports.userSignIn = (req,res)=>{
 exports.signout=(req,res)=>{
     //currently useing variable to store expired tokens
     // we can use redis in memory data base to store the expired tokens
-    const token = req.headers.authorization.split(" ")[1];
+    const token = req.headers?.authorization?.split(" ")[1];
     expiredTokens[req?.body?.user?.email]=token;
     return res.status("200").json({msg:"User logout successfully"})
 }
