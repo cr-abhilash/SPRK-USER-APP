@@ -13,15 +13,16 @@ dotenv.config();
 connectToDataBase().then((e)=>console.log("Database connected")).catch(err=> console.log(err));
 
 
-app.get('/', (req,res)=>{
-    res.send("Welcome to user app")
-})
+
 
 //middleware
 app.use(cors());
 app.use(express.json());
 app.use('/api/user',require('./routes/userRoute'));
 
+app.get('/', (req,res)=>{
+    res.send("Welcome to user app")
+})
 
 //handleing invalid routes
 app.use((req,res,next)=>{
