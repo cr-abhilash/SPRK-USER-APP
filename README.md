@@ -17,7 +17,7 @@ User app is a simple node.js application where user can signIn/signUp with jwt a
 4. GET  /api/user/all - to get all users.
 5. GET  /api/user/search?text="" - to search users by there name or contact
 
-#Setup
+## Setup
 1. Clone the repo
 2. install npm packages `npm install`
 3. set up .env file by refering to env example file.
