@@ -34,8 +34,8 @@ UserSchema.virtual('password').set( function(password){
 })
 
 UserSchema.methods={
-    checkPassword: function(password){
-        return bcrypt.compare(password, this.hashPassword)
+    checkPassword:  function(password){
+        return bcrypt.compareSync(password, this.hashPassword)
     }
 }
 const UserModel = mongoose.model('User',UserSchema);
